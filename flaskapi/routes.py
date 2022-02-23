@@ -8,6 +8,7 @@ from datetime import timezone
 from dateutil import parser as time_parser
 from flaskapi.enums import API_CALL_TYPE
 
+CELSIUS_KELVIN_OFFSET = 273.15
 
 @app.route("/ping")
 @app.route("/ping/")
@@ -65,7 +66,6 @@ def handle_at_arg_case(at, lat, lon):
 
   for ele in return_json["daily"]:
     if timestamp_arg >= ele["dt"] - ONE_DAY_UNIX_OFFSET and timestamp_arg <= ele["dt"]:
-      CELSIUS_KELVIN_OFFSET = 273.15 
       return jsonify({
         str(ele["weather"][0]["main"]): str(ele["weather"][0]["description"]),
         "humidity": str(round(ele["humidity"], 2)) + "%",
