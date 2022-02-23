@@ -26,6 +26,7 @@ def make_api_call(lat, lon):
   print(777)
   my_json = buffer.getvalue().decode('utf8').replace("'", '"')
   print(my_json)
+  return my_json
 
 @app.route("/ping")
 def ping():
@@ -40,7 +41,8 @@ def ping():
 @app.route("/forecast/<string:city>/")
 def forecast(city):
   lat, lon = get_lat_lon(city)
-  make_api_call(lat, lon)
+  return_json = make_api_call(lat, lon)
+  return return_json
   return jsonify({
     "lat": lat,
     "lon": lon,
