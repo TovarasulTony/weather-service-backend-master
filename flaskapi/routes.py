@@ -1,3 +1,5 @@
+import json
+
 from flaskapi import app
 from flask import jsonify, request
 from flaskapi.coordinates import get_lat_lon
@@ -5,10 +7,6 @@ from flaskapi.pycurl_wrapper import make_api_call
 from datetime import timezone
 from dateutil import parser as time_parser
 from flaskapi.enums import API_CALL_TYPE
-
-
-import json
-
 
 
 @app.route("/ping")

@@ -2,6 +2,9 @@ import pycurl
 import certifi
 from io import BytesIO
 
+from flaskapi.enums import API_CALL_TYPE
+
+
 def make_api_call(lat, lon, call_type):
   buffer = BytesIO()
   c = pycurl.Curl()
