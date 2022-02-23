@@ -67,12 +67,12 @@ def handle_at_arg_case(at, lat, lon):
   timestamp_arg = yourdate.replace(tzinfo=timezone.utc).timestamp()
   return_json = make_api_call(lat, lon, API_CALL_TYPE.Date)
   return_json = json.loads(return_json)
-  if return_json["daily"][0]["dt"] > timestamp_arg:
+  one_day_offset = 86400
+  if return_json["daily"][0]["dt"] - one_day_offset > timestamp_arg:
     return jsonify({
       "error": "Date is in the past",
       "error_code": "invalid date"
     }), 404
-  one_day_offset = 86400
   for ele in return_json["daily"]:
     if timestamp_arg >= ele["dt"] - one_day_offset and timestamp_arg <= ele["dt"]:
       return jsonify({
