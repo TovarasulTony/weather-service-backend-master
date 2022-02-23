@@ -1,6 +1,6 @@
 from flaskapi import app
 from flask import jsonify
-from coordinates import get_lat_lon
+from flaskapi.coordinates import get_lat_lon
 
 @app.route("/ping")
 def ping():
