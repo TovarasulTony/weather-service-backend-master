@@ -52,7 +52,7 @@ def forecast(city):
   #return return_json
   return jsonify({
     "clouds": find_clouds(return_json["weather"]),
-    "humidity": return_json["main"]["humidity"] + "%",
-    "pressure": return_json["main"]["pressure"] + " hPa",
-    "temperature": return_json["main"]["temp"] + "C"
+    "humidity": str(return_json["main"]["humidity"]) + "%",
+    "pressure": str(return_json["main"]["pressure"]) + " hPa",
+    "temperature": str(return_json["main"]["temp"]) + "C"
   })
