@@ -49,7 +49,6 @@ sudo apt install libcurl4-gnutls-dev
 
 python3 -m pip install certifi
 pip install python-dateutil
-pip install enums
 
 python3 -m pip install pycurl
 
