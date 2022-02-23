@@ -1,5 +1,5 @@
 from flaskapi import app
-from flask import jsonify
+from flask import jsonify, request
 from flaskapi.coordinates import get_lat_lon
 
 import pycurl
