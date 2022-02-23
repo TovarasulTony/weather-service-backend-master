@@ -3,6 +3,7 @@ from flask import jsonify, request
 from flaskapi.coordinates import get_lat_lon
 from datetime import timezone
 from dateutil import parser as time_parser
+from enums import API_CALL_TYPE
 
 import pycurl
 import certifi
@@ -11,10 +12,15 @@ from io import BytesIO
 
 
 
-def make_api_call(lat, lon):
+def make_api_call(lat, lon, call_type):
   buffer = BytesIO()
   c = pycurl.Curl()
-  c.setopt(c.URL, 'api.openweathermap.org/data/2.5/weather?lat=' + str(lat) + '&lon=' + str(lon) + '&appid=' + 'a380c85701c2082a4ac12ec49f670631')
+  if call_type == API_CALL_TYPE.No_Date:
+    c.setopt(c.URL, 'api.openweathermap.org/data/2.5/weather?lat=' + str(lat) + '&lon=' + str(lon) + '&appid=' + 'a380c85701c2082a4ac12ec49f670631')
+  elif call_type == API_CALL_TYPE.Date:
+    c.setopt(c.URL, 'https://api.openweathermap.org/data/2.5/onecall?lat=' + str(lat) + '&lon=' + str(lon) + '&exclude=current,minutely,hourly,alerts&appid=' + 'a380c85701c2082a4ac12ec49f670631')
+  else
+    return None
   c.setopt(c.WRITEDATA, buffer)
   c.setopt(c.CAINFO, certifi.where())
   c.perform()
@@ -31,7 +37,7 @@ def find_clouds(weather):
       return element["description"]
 
 @app.route("/ping")
-@app.route("/ping")
+@app.route("/ping/")
 def ping():
   return jsonify({
     "name": "weatherservice",
@@ -45,11 +51,30 @@ def ping():
 def forecast(city):
   at = request.args.get('at', type=str)
   if at != None:
-    print(at)
-    yourdate = time_parser.isoparse(at.replace(" ","+"))
-    #dt = datetime(2015, 10, 19)
-    timestamp = yourdate.replace(tzinfo=timezone.utc).timestamp()
+    yourdate = time_parser.isoparse(at.replace(" ", "+")) # dirty hack, I don't know how to fix this or if this breaks something else :(
+    timestamp_arg = yourdate.replace(tzinfo=timezone.utc).timestamp()
     print(timestamp)
+    return_json = make_api_call(lat, lon, API_CALL_TYPE.Date)
+    return_json = json.loads(return_json)
+    if return_json["daily"][0]["dt"] > timestamp_arg:
+      return jsonify({
+        "error": "Date is in the past",
+        "error_code": "invalid date"
+      }), 404
+    one_day_offset = 86400
+    for ele in return_json["daily"]:
+      if timestamp_arg => ele["dt"] and timestamp_arg < ele["dt"] + one_day_offset
+        return jsonify({
+          str(ele["weather"][0]["main"]): str(ele["weather"][0]["description"]),
+          "humidity": str(round(ele["humidity"], 2)) + "%",
+          "pressure": str(round(ele["pressure"], 2)) + " hPa",
+          "temperature": str(round(ele["temp"]["day"] - 273.15, 1)) + "C"
+        })
+    return jsonify({
+        "error": "Date is further in the future than supported",
+        "error_code": "invalid date"
+      }), 404
+
   lat, lon = get_lat_lon(city)
   if lat == None:
     return jsonify({
@@ -57,7 +82,7 @@ def forecast(city):
       "error_code": "country_not_found"
     }), 404
 
-  return_json = make_api_call(lat, lon)
+  return_json = make_api_call(lat, lon, API_CALL_TYPE.No_Date)
   return_json = json.loads(return_json)
   return jsonify({
     str(return_json["weather"][0]["main"]): str(return_json["weather"][0]["description"]),
