@@ -63,4 +63,4 @@ def internal_error(error):
   return jsonify({
     "error": "Something went wrong",
     "error_code": "internal_server_error"
-  })
+  }), 500
