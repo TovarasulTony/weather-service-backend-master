@@ -63,7 +63,7 @@ def forecast(city):
       }), 404
     one_day_offset = 86400
     for ele in return_json["daily"]:
-      if timestamp_arg => ele["dt"] and timestamp_arg < ele["dt"] + one_day_offset
+      if timestamp_arg >= ele["dt"] and timestamp_arg < ele["dt"] + one_day_offset
         return jsonify({
           str(ele["weather"][0]["main"]): str(ele["weather"][0]["description"]),
           "humidity": str(round(ele["humidity"], 2)) + "%",
