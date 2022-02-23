@@ -34,6 +34,22 @@ installation of ubuntu 20.04 and we know nothing about your implementation**
 python3 -m pip install Flask
 python3 -m pip install geopy 
 python3 -m pip install Nominatim
+
+------
+
+sudo apt install curl
+sudo apt install libcurl4-gnutls-dev librtmp-dev
+sudo apt install libcurl4-openssl-dev libssl-dev
+sudo apt-get install libssl-dev libcurl4-openssl-dev python-dev
+sudo apt install libcurl4-gnutls-dev
+
+#TO DO - add a proper pycurl instalation
+
+------
+
+python3 -m pip install certifi
+
+
 python3 -m pip install pycurl
 
 The Service
