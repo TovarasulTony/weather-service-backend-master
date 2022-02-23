@@ -42,6 +42,7 @@ def ping():
 def forecast(city):
   lat, lon = get_lat_lon(city)
   return_json = make_api_call(lat, lon)
+  print(type(return_json))
   return return_json
   return jsonify({
     "lat": lat,
