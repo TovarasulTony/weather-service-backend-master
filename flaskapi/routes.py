@@ -14,6 +14,8 @@ def ping():
 @app.route("/forecast/<string:city>")
 def forecast(city):
   lat, lon = get_lat_lon(city)
+  print(lat)
+  print(lon)
   return jsonify({
     "lat": lat,
     "lon": lon,
