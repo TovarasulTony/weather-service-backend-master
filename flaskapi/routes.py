@@ -29,7 +29,7 @@ def find_clouds(weather):
       return element["description"]
 
 @app.route("/ping")
-@app.route("/ping/")
+@app.route("/ping")
 def ping():
   return jsonify({
     "name": "weatherservice",
@@ -56,4 +56,11 @@ def forecast(city):
     "humidity": str(round(return_json["main"]["humidity"], 2)) + "%",
     "pressure": str(round(return_json["main"]["pressure"], 2)) + " hPa",
     "temperature": str(round(return_json["main"]["temp"] - 273.15, 1)) + "C"
+  })
+
+@app.errorhandler(500)
+def internal_error(error):
+  return jsonify({
+    "error": "Something went wrong",
+    "error_code": "internal_server_error"
   })
