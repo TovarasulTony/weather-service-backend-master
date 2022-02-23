@@ -34,6 +34,7 @@ installation of ubuntu 20.04 and we know nothing about your implementation**
 python3 -m pip install Flask
 python3 -m pip install geopy 
 python3 -m pip install Nominatim
+python3 -m pip install pycurl
 
 The Service
 -----------
