@@ -53,7 +53,7 @@ def forecast(city):
   if at != None:
     yourdate = time_parser.isoparse(at.replace(" ", "+")) # dirty hack, I don't know how to fix this or if this breaks something else :(
     timestamp_arg = yourdate.replace(tzinfo=timezone.utc).timestamp()
-    print(timestamp)
+    print(timestamp_arg)
     return_json = make_api_call(lat, lon, API_CALL_TYPE.Date)
     return_json = json.loads(return_json)
     if return_json["daily"][0]["dt"] > timestamp_arg:
