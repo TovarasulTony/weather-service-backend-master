@@ -43,7 +43,7 @@ def ping():
 @app.route("/forecast/<string:city>")
 @app.route("/forecast/<string:city>/")
 def forecast(city):
-  at = request.args.get('at')
+  at = request.args.get('at', type=str)
   if at != None:
     print(at)
     yourdate = time_parser.isoparse(at)
