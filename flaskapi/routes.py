@@ -24,7 +24,7 @@ def make_api_call(lat, lon):
   print(type(buffer.getvalue()))
   print(buffer.getvalue())
   print(777)
-  my_json = buffer.getvalue().decode('utf8').replace("'", '"')
+  my_json = buffer.getvalue().decode('utf8')
   print(my_json)
   return my_json
 
