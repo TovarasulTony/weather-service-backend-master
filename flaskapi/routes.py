@@ -74,7 +74,7 @@ def handle_at_arg_case(at, lat, lon):
     }), 404
   one_day_offset = 86400
   for ele in return_json["daily"]:
-    if timestamp_arg >= ele["dt"] - 1000 and timestamp_arg < ele["dt"] + one_day_offset:
+    if timestamp_arg >= ele["dt"] - one_day_offset and timestamp_arg <= ele["dt"]:
       return jsonify({
         str(ele["weather"][0]["main"]): str(ele["weather"][0]["description"]),
         "humidity": str(round(ele["humidity"], 2)) + "%",
