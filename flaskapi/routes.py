@@ -45,7 +45,7 @@ def forecast(city):
   lat, lon = get_lat_lon(city)
   if lat == None:
     return jsonify({
-      "error": "Cannot find country '" + city + '",
+      "error": "Cannot find country '" + city + "'",
       "error_code": "country_not_found"
     }), 404
 
