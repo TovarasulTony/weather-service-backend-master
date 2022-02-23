@@ -28,7 +28,7 @@ def make_api_call(lat, lon):
   print(my_json)
   return my_json
 
-def find_clouds(weather)
+def find_clouds(weather):
   for element in weather:
     if element["main"] == "Clouds":
       return element["description"]
