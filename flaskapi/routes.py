@@ -46,7 +46,8 @@ def forecast(city):
   print(type(return_json))
   return return_json
   return jsonify({
-    "lat": lat,
-    "lon": lon,
-    "version": "1.0.0"
+    "clouds": return_json["clouds"],
+    "humidity": "66.6%",
+    "pressure": "1027.51 hPa",
+    "temperature": "14.4C"
   })
