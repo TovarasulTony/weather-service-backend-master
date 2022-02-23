@@ -31,6 +31,8 @@ Getting it running
 **Please fill this section out, imagine we are starting with a brand new
 installation of ubuntu 20.04 and we know nothing about your implementation**
 
+python3 -m pip install Flask
+
 The Service
 -----------
 
