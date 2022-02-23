@@ -43,6 +43,13 @@ def forecast(city):
       "temperature": str(round(return_json["main"]["temp"] - 273.15, 1)) + "C"
     })
 
+@app.errorhandler(500)
+def internal_error(error):
+  return jsonify({
+    "error": "Something went wrong",
+    "error_code": "internal_server_error"
+  }), 500
+
 def handle_at_arg_case(at, lat, lon):
   yourdate = time_parser.isoparse(at.replace(" ", "+")) # dirty hack, I don't know how to fix this or if this breaks something else :(
   timestamp_arg = yourdate.replace(tzinfo=timezone.utc).timestamp()
@@ -70,10 +77,3 @@ def handle_at_arg_case(at, lat, lon):
       "error": "Date is further in the future than supported",
       "error_code": "invalid date"
     }), 404
-
-@app.errorhandler(500)
-def internal_error(error):
-  return jsonify({
-    "error": "Something went wrong",
-    "error_code": "internal_server_error"
-  }), 500
