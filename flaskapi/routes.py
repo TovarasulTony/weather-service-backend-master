@@ -3,7 +3,7 @@ from flask import jsonify, request
 from flaskapi.coordinates import get_lat_lon
 from datetime import timezone
 from dateutil import parser as time_parser
-from enums import API_CALL_TYPE
+from flaskapi.enums import API_CALL_TYPE
 
 import pycurl
 import certifi
