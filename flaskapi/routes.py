@@ -2,7 +2,7 @@ from flaskapi import app
 from flask import jsonify
 from flaskapi.coordinates import get_lat_lon
 
-import flaskapi.pycurl.python.curl as pycurl
+import pycurl
 import certifi
 from io import BytesIO
 
