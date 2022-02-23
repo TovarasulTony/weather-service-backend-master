@@ -1,6 +1,8 @@
 from flaskapi import app
 from flask import jsonify, request
 from flaskapi.coordinates import get_lat_lon
+from datetime import timezone
+from dateutil import time_parser
 
 import pycurl
 import certifi
@@ -42,8 +44,11 @@ def ping():
 @app.route("/forecast/<string:city>/")
 def forecast(city):
   at = request.args.get('at')
-  print(8888)
-  print(at)
+  if at != None:
+    yourdate = time_parser.parse(datestring)
+    #dt = datetime(2015, 10, 19)
+    timestamp = yourdate.replace(tzinfo=timezone.utc).timestamp()
+    print(timestamp)
   lat, lon = get_lat_lon(city)
   if lat == None:
     return jsonify({
