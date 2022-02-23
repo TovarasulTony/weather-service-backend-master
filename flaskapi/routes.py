@@ -1,4 +1,5 @@
 from flaskapi import app
+from flask import jsonify
 
 @app.route("/ping")
 def home():
