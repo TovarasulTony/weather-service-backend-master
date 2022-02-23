@@ -44,7 +44,7 @@ def forecast(city):
   return_json = make_api_call(lat, lon)
   return_json = json.loads(return_json)
   print(type(return_json))
-  #return return_json
+  return return_json
   return jsonify({
     "clouds": return_json["clouds"],
     "humidity": "66.6%",
