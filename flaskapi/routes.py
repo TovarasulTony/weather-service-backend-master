@@ -42,6 +42,8 @@ def ping():
 @app.route("/forecast/<string:city>/")
 def forecast(city):
   at = request.args.get('at')
+  print(8888)
+  print(at)
   lat, lon = get_lat_lon(city)
   if lat == None:
     return jsonify({
@@ -52,7 +54,7 @@ def forecast(city):
   return_json = make_api_call(lat, lon)
   return_json = json.loads(return_json)
   return jsonify({
-    "clouds": find_clouds(return_json["weather"]),
+    str(return_json["weather"][0]["main"]): str(return_json["weather"][0]["description"]),
     "humidity": str(round(return_json["main"]["humidity"], 2)) + "%",
     "pressure": str(round(return_json["main"]["pressure"], 2)) + " hPa",
     "temperature": str(round(return_json["main"]["temp"] - 273.15, 1)) + "C"
