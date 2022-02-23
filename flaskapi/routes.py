@@ -1,6 +1,9 @@
 from flaskapi import app
 
-@app.route("/")
 @app.route("/ping")
 def home():
-    return "200"
+  return jsonify({
+    "name": "weatherservice",
+    "status": "ok",
+    "version": "1.0.0"
+  })
