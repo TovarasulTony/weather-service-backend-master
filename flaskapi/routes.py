@@ -51,7 +51,7 @@ def forecast(city):
       "error_code": "country_not_found"
     }), 404
   if at != None:
-    handle_at_arg_case(at)
+    handle_at_arg_case(at, lat, lon)
   else:
     return_json = make_api_call(lat, lon, API_CALL_TYPE.No_Date)
     return_json = json.loads(return_json)
@@ -62,7 +62,7 @@ def forecast(city):
       "temperature": str(round(return_json["main"]["temp"] - 273.15, 1)) + "C"
     })
 
-def handle_at_arg_case(at):
+def handle_at_arg_case(at, lat, lon):
   yourdate = time_parser.isoparse(at.replace(" ", "+")) # dirty hack, I don't know how to fix this or if this breaks something else :(
   timestamp_arg = yourdate.replace(tzinfo=timezone.utc).timestamp()
   return_json = make_api_call(lat, lon, API_CALL_TYPE.Date)
@@ -74,7 +74,7 @@ def handle_at_arg_case(at):
     }), 404
   one_day_offset = 86400
   for ele in return_json["daily"]:
-    if timestamp_arg >= ele["dt"] - 500 and timestamp_arg < ele["dt"] + one_day_offset:
+    if timestamp_arg >= ele["dt"] - 1000 and timestamp_arg < ele["dt"] + one_day_offset:
       return jsonify({
         str(ele["weather"][0]["main"]): str(ele["weather"][0]["description"]),
         "humidity": str(round(ele["humidity"], 2)) + "%",
