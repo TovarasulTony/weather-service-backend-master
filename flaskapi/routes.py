@@ -2,6 +2,24 @@ from flaskapi import app
 from flask import jsonify
 from flaskapi.coordinates import get_lat_lon
 
+import pycurl
+import certifi
+from io import BytesIO
+
+
+
+def make_api_call(lat, lon):
+  buffer = BytesIO()
+  c = pycurl.Curl()
+  c.setopt(c.URL, 'api.openweathermap.org/data/2.5/weather?lat=' + str(lat) + '&lon=' + str(lon) + '&appid=' + 'a380c85701c2082a4ac12ec49f670631')
+  c.setopt(c.WRITEDATA, buffer)
+  c.setopt(c.CAINFO, certifi.where())
+  c.perform()
+  c.close()
+
+body = buffer.getvalue()
+print(body.decode('iso-8859-1'))
+
 @app.route("/ping")
 def ping():
   return jsonify({
@@ -14,8 +32,7 @@ def ping():
 @app.route("/forecast/<string:city>")
 def forecast(city):
   lat, lon = get_lat_lon(city)
-  print(lat)
-  print(lon)
+  make_api_call(lat, lon)
   return jsonify({
     "lat": lat,
     "lon": lon,
