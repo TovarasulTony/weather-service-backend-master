@@ -34,6 +34,7 @@ def find_clouds(weather):
       return element["description"]
 
 @app.route("/ping")
+@app.route("/ping/")
 def ping():
   return jsonify({
     "name": "weatherservice",
@@ -45,11 +46,13 @@ def ping():
 @app.route("/forecast/<string:city>")
 @app.route("/forecast/<string:city>/")
 def forecast(city):
+  at = request.args.get('at')
+  print(7777777777777)
+  print(at)
+  print(7777777777777)
   lat, lon = get_lat_lon(city)
   return_json = make_api_call(lat, lon)
   return_json = json.loads(return_json)
-  print(type(return_json))
-  #return return_json
   return jsonify({
     "clouds": find_clouds(return_json["weather"]),
     "humidity": str(round(return_json["main"]["humidity"], 2)) + "%",
