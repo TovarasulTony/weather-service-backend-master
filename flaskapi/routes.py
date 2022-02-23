@@ -19,6 +19,9 @@ def make_api_call(lat, lon):
 
   body = buffer.getvalue()
   print(body.decode('iso-8859-1'))
+  print(888)
+  print(type(buffer.getvalue()))
+  print(buffer.getvalue())
 
 @app.route("/ping")
 def ping():
