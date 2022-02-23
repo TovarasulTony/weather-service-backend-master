@@ -54,6 +54,12 @@ def forecast(city):
     yourdate = time_parser.isoparse(at.replace(" ", "+")) # dirty hack, I don't know how to fix this or if this breaks something else :(
     timestamp_arg = yourdate.replace(tzinfo=timezone.utc).timestamp()
     print(timestamp_arg)
+    lat, lon = get_lat_lon(city)
+    if lat == None:
+      return jsonify({
+        "error": "Cannot find country '" + city + "'",
+        "error_code": "country_not_found"
+      }), 404
     return_json = make_api_call(lat, lon, API_CALL_TYPE.Date)
     return_json = json.loads(return_json)
     if return_json["daily"][0]["dt"] > timestamp_arg:
