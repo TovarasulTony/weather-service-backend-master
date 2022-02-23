@@ -1,4 +1,6 @@
-
+import pycurl
+import certifi
+from io import BytesIO
 
 def make_api_call(lat, lon, call_type):
   buffer = BytesIO()

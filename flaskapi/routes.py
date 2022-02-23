@@ -6,10 +6,8 @@ from datetime import timezone
 from dateutil import parser as time_parser
 from flaskapi.enums import API_CALL_TYPE
 
-import pycurl
-import certifi
+
 import json
-from io import BytesIO
 
 
 
