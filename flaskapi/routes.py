@@ -45,7 +45,7 @@ def ping():
 def forecast(city):
   at = request.args.get('at')
   if at != None:
-    yourdate = time_parser.parse(at)
+    yourdate = time_parser.isoparse(at)
     #dt = datetime(2015, 10, 19)
     timestamp = yourdate.replace(tzinfo=timezone.utc).timestamp()
     print(timestamp)
