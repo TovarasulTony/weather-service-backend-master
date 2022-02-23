@@ -51,7 +51,7 @@ def forecast(city):
       "error_code": "country_not_found"
     }), 404
   if at != None:
-    handle_at_arg_case(at, lat, lon)
+    return handle_at_arg_case(at, lat, lon)
   else:
     return_json = make_api_call(lat, lon, API_CALL_TYPE.No_Date)
     return_json = json.loads(return_json)
