@@ -54,5 +54,5 @@ def forecast(city):
     "clouds": find_clouds(return_json["weather"]),
     "humidity": str(return_json["main"]["humidity"]) + "%",
     "pressure": str(return_json["main"]["pressure"]) + " hPa",
-    "temperature": str(return_json["main"]["temp"] - 273.15) + "C"
+    "temperature": str(round(return_json["main"]["temp"] - 273.15), 1) + "C"
   })
