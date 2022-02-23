@@ -15,7 +15,7 @@ def ping():
 def forecast(city):
   lat, lon = get_lat_lon(city)
   return jsonify({
-    "lat": lat,
-    "lon": lon,
+    "lat": str(lat),
+    "lon": str(lon),
     "version": "1.0.0"
   })
