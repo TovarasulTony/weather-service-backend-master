@@ -2,7 +2,7 @@ from flaskapi import app
 from flask import jsonify, request
 from flaskapi.coordinates import get_lat_lon
 from datetime import timezone
-from dateutil import time_parser
+from dateutil import parser as time_parser
 
 import pycurl
 import certifi
