@@ -4,6 +4,7 @@ from flaskapi.coordinates import get_lat_lon
 
 import pycurl
 import certifi
+import json
 from io import BytesIO
 
 
@@ -22,6 +23,9 @@ def make_api_call(lat, lon):
   print(888)
   print(type(buffer.getvalue()))
   print(buffer.getvalue())
+  print(777)
+  my_json = buffer.getvalue().decode('utf8').replace("'", '"')
+  print(my_json)
 
 @app.route("/ping")
 def ping():
