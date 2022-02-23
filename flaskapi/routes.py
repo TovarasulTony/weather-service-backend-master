@@ -19,11 +19,6 @@ def make_api_call(lat, lon):
   c.close()
 
   body = buffer.getvalue()
-  print(body.decode('iso-8859-1'))
-  print(888)
-  print(type(buffer.getvalue()))
-  print(buffer.getvalue())
-  print(777)
   my_json = buffer.getvalue().decode('utf8')
   print(my_json)
   return my_json
@@ -47,10 +42,10 @@ def ping():
 @app.route("/forecast/<string:city>/")
 def forecast(city):
   at = request.args.get('at')
-  print(7777777777777)
-  print(at)
-  print(7777777777777)
   lat, lon = get_lat_lon(city)
+  print(9999999999999999)
+  print(lat)
+  print(lon)
   return_json = make_api_call(lat, lon)
   return_json = json.loads(return_json)
   return jsonify({
