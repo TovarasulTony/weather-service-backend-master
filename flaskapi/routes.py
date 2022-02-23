@@ -46,7 +46,7 @@ def forecast(city):
   at = request.args.get('at', type=str)
   if at != None:
     print(at)
-    yourdate = time_parser.isoparse(at)
+    yourdate = time_parser.isoparse(at.replace(" ","+"))
     #dt = datetime(2015, 10, 19)
     timestamp = yourdate.replace(tzinfo=timezone.utc).timestamp()
     print(timestamp)
