@@ -2,7 +2,7 @@ from flaskapi import app
 from flask import jsonify
 from flaskapi.coordinates import get_lat_lon
 
-import pycurl
+import flaskapi.pycurl.python.curl as pycurl
 import certifi
 from io import BytesIO
 
@@ -30,6 +30,7 @@ def ping():
 
 
 @app.route("/forecast/<string:city>")
+@app.route("/forecast/<string:city>/")
 def forecast(city):
   lat, lon = get_lat_lon(city)
   make_api_call(lat, lon)
