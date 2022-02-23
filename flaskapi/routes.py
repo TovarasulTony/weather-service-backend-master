@@ -43,9 +43,12 @@ def ping():
 def forecast(city):
   at = request.args.get('at')
   lat, lon = get_lat_lon(city)
-  print(9999999999999999)
-  print(lat)
-  print(lon)
+  if lat == None:
+    return jsonify({
+      "error": "Cannot find country '" + city + '",
+      "error_code": "country_not_found"
+    }), 404
+
   return_json = make_api_call(lat, lon)
   return_json = json.loads(return_json)
   return jsonify({
