@@ -31,27 +31,27 @@ Getting it running
 **Please fill this section out, imagine we are starting with a brand new
 installation of ubuntu 20.04 and we know nothing about your implementation**
 
-python3 -m pip install Flask
-pip install flask_httpauth
-python3 -m pip install geopy 
-python3 -m pip install Nominatim
-
-------
 
 sudo apt install curl
 sudo apt install libcurl4-gnutls-dev librtmp-dev
 sudo apt install libcurl4-openssl-dev libssl-dev
-sudo apt-get install libssl-dev libcurl4-openssl-dev python-dev
-sudo apt install libcurl4-gnutls-dev
-
-#TO DO - add a proper pycurl instalation
-
-------
-
-python3 -m pip install certifi
+pip install Flask
+pip install flask_httpauth
+pip install geopy 
+pip install Nominatim
+pip install certifi
 pip install python-dateutil
+pip install pycurl
 
-python3 -m pip install pycurl
+I really hope I didn't missed anything. I won't put the full process to install pycurl, I had a lot of problems on my machine and I think I did some hacks to make it work. I tried so many things I am not even sure what worked.
+
+    mkdir pycurl_inst
+		cd pycurl_inst
+    curl -O https://files.pythonhosted.org/packages/12/3f/557356b60d8e59a1cce62ffc07ecc03e4f8a202c86adae34d895826281fb/pycurl-7.43.0.tar.gz
+		tar -zxvf pycurl-7.43.0.tar.gz
+		cd pycurl-7.43.0/
+		sudo apt-get install python3-dev
+		sudo apt-get install curl zip unzip tar
 
 The Service
 -----------
@@ -140,6 +140,7 @@ with `404` status code and an appropriate message:
 
 ```bash
 $ curl -si http://localhost:8080/forecast/westeros
+> Off topic, I think Westeros is a city/region in Germany. I learned this because of this assigment :D
 
 HTTP/1.1 404 Not Found
 Content-Type: application/json; charset=utf-8
@@ -179,15 +180,17 @@ Content-Type: application/json; charset=utf-8
 Things that we would like to see
 --------------------------------
 
-* Tests! We believe that code without tests is bad code, please include any
+* [ ] Tests! We believe that code without tests is bad code, please include any
   instructions and/or dependencies that we will need in order to run your
   tests.
-* No sensitive data (such as your API key) should included in your code, your
+  > I tried to make the tests run on the same machine. I had problems making flask to listen on 127.0.0.1 so I didn't had the chance to test that the tests are working.
+* [x] No sensitive data (such as your API key) should included in your code, your
   service should read sensitive information from the environment at run time
   (please include this information in your set up documentation).
-* We work with [git](https://git-scm.com/) for version control, please include
+* [x] We work with [git](https://git-scm.com/) for version control, please include
   your `.git` folder when you compress this folder and send it back to us. You
   should feel free to commit at any point in the process.
+  > I write the code on windows. After every little change I pushed to my server to thest the changes. It is not efficient but on my windows machine I don't have the proper python setup.
 
 Stretch Goals
 -------------
@@ -195,13 +198,16 @@ Stretch Goals
 If you have time or want to go the extra mile then try implementing the
 following features:
 
-* Configurable units for temperature (Fahrenheit, Kelvins, etc) and Pressure
+* [ ] Configurable units for temperature (Fahrenheit, Kelvins, etc) and Pressure
   (bars, atmospheres, tor, etc) via query string parameters.
-* Secure your service with [Basic auth](https://en.wikipedia.org/wiki/Basic_access_authentication)
+* [x] Secure your service with [Basic auth](https://en.wikipedia.org/wiki/Basic_access_authentication)
   using the user `admin` and the password `secret`.
-* Cache responses for a short period of time in order to avoid making
+* [x] Cache responses for a short period of time in order to avoid making
   unnecessary requests to the 3rd party API.
-* Create a working [docker](https://www.docker.com/) container and include the
+  > I think it's very primitive
+* [ ] Create a working [docker](https://www.docker.com/) container and include the
   `Dockerfile` along with your service.
-* Run the service somewhere on the internet and give us a link. Bonus points
+* [x] Run the service somewhere on the internet and give us a link. Bonus points
   for including your deployment configuration and/or documentation.
+  > http://194.135.95.157:2077/ping
+  > I am not sure what to write about the configuration. I have a VPS, Ubuntu 20, python 3.9 adn I work in an environment so the packages from this project and their versions won't affect other projects.
