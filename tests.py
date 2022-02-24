@@ -13,7 +13,7 @@ PASS_BA = jsonConfig["PASS_BA"]
 BASIC_URL = "http://" + SERVER_IP + ":" + str(PORT_IP) + "/"
 
 
-def make_api_call(route, ba_auth=True, city=None, at=None):
+def make_api_call(route, ba_auth=False, city=None, at=None):
   buffer = BytesIO()
   c = pycurl.Curl()
   if route == "ping":
