@@ -1,7 +1,7 @@
 class CacheStruct:
   response_dict = {
     "id" : None,
-    "city" None: ,
+    "city": None,
     "at" : None,
     "response" : None
   }
