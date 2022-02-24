@@ -36,6 +36,7 @@ def make_api_call(route, ba_auth=True, city=None, at=None):
 
 def test_ping():
   response_json = make_api_call("ping")
+  print(response_json)
   response_json = json.loads(response_json)
   if response_json["name"] != "weatherservice":
     return False
@@ -46,8 +47,7 @@ def test_ping():
   return True
 
 def test_forecast():
-  response_json = make_api_call("ping")
-  print(response_json)
+  response_json = make_api_call("forecast")
   response_json = json.loads(response_json)
   for elem in response_json:
     print(response_json[elem])
