@@ -47,6 +47,7 @@ def test_ping():
 
 def test_forecast():
   response_json = make_api_call("ping")
+  print(response_json)
   response_json = json.loads(response_json)
   for elem in response_json:
     print(response_json[elem])
