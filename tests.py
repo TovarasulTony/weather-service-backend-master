@@ -27,7 +27,7 @@ def make_api_call(route, ba_auth=False, city=None, at=None):
   if ba_auth == True:
     c.setopt(c.HTTPAUTH, c.HTTPAUTH_BASIC)
     c.setopt(c.USERPWD, '%s:%s' %(USERNAME_BA, PASS_BA))
-  c.setopt(pycurl.HTTPHEADER, ['Accept: application/json'])
+  c.setopt(c.HTTPHEADER, ['Accept: application/json'])
   c.setopt(c.WRITEDATA, buffer)
   c.setopt(c.CAINFO, certifi.where())
   c.perform()
