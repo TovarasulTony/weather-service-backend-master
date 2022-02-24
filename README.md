@@ -190,7 +190,7 @@ Things that we would like to see
 * [x] We work with [git](https://git-scm.com/) for version control, please include
   your `.git` folder when you compress this folder and send it back to us. You
   should feel free to commit at any point in the process.
-  > I write the code on windows. After every little change I pushed to my server to thest the changes. It is not efficient but on my windows machine I don't have the proper python setup.
+  > I write the code on windows. After every little change I pushed to my server to thest the changes. It is not efficient but on my windows machine I don't have the proper python setup. Commit history is a mess.
 
 Stretch Goals
 -------------
