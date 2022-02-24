@@ -29,7 +29,7 @@ def make_api_call(route, ba_auth=False, city=None, at=None):
     c.setopt(c.USERPWD, '%s:%s' %(USERNAME_BA, PASS_BA))
   c.setopt(c.HTTPHEADER, ['Accept: application/json'])
   c.setopt(c.WRITEDATA, buffer)
-  #c.setopt(c.CAINFO, certifi.where())
+  c.setopt(c.CAINFO, certifi.where())
   c.perform()
   c.close()
   body = buffer.getvalue()
