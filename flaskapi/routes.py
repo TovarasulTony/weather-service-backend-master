@@ -2,13 +2,22 @@ import json
 
 from flaskapi import app
 from flask import jsonify, request
-from flaskapi.coordinates import get_lat_lon
-from flaskapi.pycurl_wrapper import make_api_call
 from datetime import timezone
 from dateutil import parser as time_parser
+from flaskapi.coordinates import get_lat_lon
+from flaskapi.pycurl_wrapper import make_api_call
 from flaskapi.enums import API_CALL_TYPE
+from flaskapi.cache import CacheStruct
 
+
+with open("config.json") as jsonFile:
+  jsonConfig = json.load(jsonFile)
+  jsonFile.close()
 CELSIUS_KELVIN_OFFSET = 273.15
+ONE_DAY_UNIX_OFFSET = 64800
+USERNAME_BA = jsonConfig["USERNAME_BA"]
+PASS_BA = jsonConfig["PASS_BA"]
+cache_struct = CacheStruct()
 
 @app.route("/ping")
 @app.route("/ping/")
@@ -23,6 +32,11 @@ def ping():
 @app.route("/forecast/<string:city>")
 @app.route("/forecast/<string:city>/")
 def forecast(city):
+  #if request.authorization["username"] != USERNAME_BA and request.authorization["password"] != PASS_BA:
+  #    return jsonify({
+  #      "error": "You are not authorized for access",
+  #      "error_code": "wrong_credentials"
+  #    }), 403
   at = request.args.get('at', type=str)
   lat, lon = get_lat_lon(city)
 
@@ -32,17 +46,23 @@ def forecast(city):
       "error_code": "country_not_found"
     }), 404
 
+  cached_response, is_cached, cache_id = cache_struct.check_request(city, at)
+  if is_cached == True:
+    return cached_response
+
   if at != None:
-    return handle_at_arg_case(at, lat, lon)
+    return handle_at_arg_case(at, lat, lon, cache_id)
   else:
-    return_json = make_api_call(lat, lon, API_CALL_TYPE.No_Date)
-    return_json = json.loads(return_json)
-    return jsonify({
-      str(return_json["weather"][0]["main"]): str(return_json["weather"][0]["description"]),
-      "humidity": str(round(return_json["main"]["humidity"], 2)) + "%",
-      "pressure": str(round(return_json["main"]["pressure"], 2)) + " hPa",
-      "temperature": str(round(return_json["main"]["temp"] - 273.15, 1)) + "C"
+    response_json = make_api_call(lat, lon, API_CALL_TYPE.No_Date)
+    response_json = json.loads(response_json)
+    return_json = jsonify({
+      str(response_json["weather"][0]["main"]): str(response_json["weather"][0]["description"]),
+      "humidity": str(round(response_json["main"]["humidity"], 2)) + "%",
+      "pressure": str(round(response_json["main"]["pressure"], 2)) + " hPa",
+      "temperature": str(round(response_json["main"]["temp"] - CELSIUS_KELVIN_OFFSET, 1)) + "C"
     })
+    cache_struct.cache_response(cache_id, return_json)
+    return return_json
 
 @app.errorhandler(500)
 def internal_error(error):
@@ -51,12 +71,11 @@ def internal_error(error):
     "error_code": "internal_server_error"
   }), 500
 
-def handle_at_arg_case(at, lat, lon):
+def handle_at_arg_case(at, lat, lon, cache_id):
   yourdate = time_parser.isoparse(at.replace(" ", "+")) # dirty hack, I don't know how to fix this or if this breaks something else :(
   timestamp_arg = yourdate.replace(tzinfo=timezone.utc).timestamp()
   return_json = make_api_call(lat, lon, API_CALL_TYPE.Date)
   return_json = json.loads(return_json)
-  ONE_DAY_UNIX_OFFSET = 86400
 
   if return_json["daily"][0]["dt"] - ONE_DAY_UNIX_OFFSET > timestamp_arg:
     return jsonify({
@@ -66,12 +85,14 @@ def handle_at_arg_case(at, lat, lon):
 
   for ele in return_json["daily"]:
     if timestamp_arg >= ele["dt"] - ONE_DAY_UNIX_OFFSET and timestamp_arg <= ele["dt"]:
-      return jsonify({
+      return_json = jsonify({
         str(ele["weather"][0]["main"]): str(ele["weather"][0]["description"]),
         "humidity": str(round(ele["humidity"], 2)) + "%",
         "pressure": str(round(ele["pressure"], 2)) + " hPa",
         "temperature": str(round(ele["temp"]["day"] - CELSIUS_KELVIN_OFFSET, 1)) + "C"
       })
+      cache_struct.cache_response(cache_id, return_json)
+      return return_json
 
   return jsonify({
       "error": "Date is further in the future than supported",

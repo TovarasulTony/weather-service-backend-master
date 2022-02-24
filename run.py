@@ -1,4 +1,9 @@
 from flaskapi import app
+import json
+
 
 if __name__ == '__main__':
-  app.run(host="194.135.95.157", port=2077)
+  with open("flaskapi/config.json") as jsonFile:
+    jsonObject = json.load(jsonFile)
+    jsonFile.close()
+  app.run(host=jsonObject["IP"], port=jsonObject["PORT"])
