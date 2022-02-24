@@ -13,7 +13,7 @@ PASS_BA = jsonConfig["PASS_BA"]
 BASIC_URL = "http://" + SERVER_IP + ":" + str(PORT_IP) + "/"
 
 
-def make_api_call(route, ba_auth=False, city=None, at=None):
+def make_api_call(route, ba_auth=True, city=None, at=None):
   buffer = BytesIO()
   c = pycurl.Curl()
   if route == "ping":
@@ -49,7 +49,29 @@ def test_ping():
   return True
 
 def test_forecast():
-  response_json = make_api_call("forecast")
+  response_json = make_api_call(route="forecast", city="london")
+  response_json = json.loads(response_json)
+  for elem in response_json:
+    print(response_json[elem])
+  if response_json["humidity"] != None or len(response_json["humidity"]) <= 1 or response_json["humidity"][-1] != "%":
+    return False
+  if response_json["pressure"] != None or len(response_json["pressure"]) <= 4 or response_json["pressure"][-4:0] != " hPa":
+    return False
+  if response_json["temperature"] != None or len(response_json["temperature"]) <= 1 or response_json["temperature"][-1] != "C":
+    return False
+  return True
+
+def test_forecast_ba():
+  response_json = make_api_call(route="forecast", ba_auth=False)
+  response_json = json.loads(response_json)
+  for elem in response_json:
+    print(response_json[elem])
+  if response_json["error"] != "You are not authorized for access" or response_json["error_code"] != "wrong_credentials":
+    return False
+  return True
+
+def test_forecast_at():
+  response_json = make_api_call(route="forecast", city="london", at="2022-02-26")
   response_json = json.loads(response_json)
   for elem in response_json:
     print(response_json[elem])
@@ -65,6 +87,21 @@ def test_all():
   print("-----")
   print("test_ping:")
   print(test_ping())
+  print("-----")
+
+  print("-----")
+  print("test_forecast:")
+  print(test_forecast())
+  print("-----")
+  
+  print("-----")
+  print("test_forecast_ba:")
+  print(test_forecast_ba())
+  print("-----")
+  
+  print("-----")
+  print("test_forecast_at:")
+  print(test_forecast_at())
   print("-----")
 
 
