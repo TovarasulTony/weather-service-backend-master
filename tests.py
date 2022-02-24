@@ -12,7 +12,6 @@ USERNAME_BA = jsonConfig["USERNAME_BA"]
 PASS_BA = jsonConfig["PASS_BA"]
 BASIC_URL = "http://" + SERVER_IP + ":" + str(PORT_IP) + "/"
 
-test_all()
 
 def make_api_call(route, ba_auth=True, city=None, at=None):
   buffer = BytesIO()
@@ -64,3 +63,6 @@ def test_all():
   print("test_ping:")
   print(test_ping())
   print("-----")
+
+
+test_all()
