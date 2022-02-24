@@ -21,9 +21,9 @@ class CacheStruct:
     new_element["city"] = city
     new_element["at"] = at
     self.request_list.append(new_element)
-    if self.next_id - self.oldesr_id > self.CACHED_ELEMENTS_NO:
+    if self.next_id - self.oldest_id > self.CACHED_ELEMENTS_NO:
       for element in self.request_list:
-        if element["id"] == self.oldesr_id:
+        if element["id"] == self.oldest_id:
           self.request_list.remove(element)
           self.oldest_id += 1
     return None, False, new_element["id"]
