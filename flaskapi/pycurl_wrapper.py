@@ -6,7 +6,7 @@ import json
 from flaskapi.enums import API_CALL_TYPE
 
 
-with open("config.json") as jsonFile:
+with open("flaskapi/config.json") as jsonFile:
   jsonObject = json.load(jsonFile)
   jsonFile.close()
 API_KEY = jsonObject["API_KEY"]
