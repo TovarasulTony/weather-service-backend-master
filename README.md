@@ -46,7 +46,7 @@ installation of ubuntu 20.04 and we know nothing about your implementation**
 - pip install pycurl
 
 I really hope I didn't missed anything. I won't put the full process to install pycurl, I had a lot of problems on my machine and I think I did some hacks to make it work. I tried so many things I am not even sure what worked. If you have problems, maybe the below code will help
-'''
+```bash
 mkdir pycurl_inst
 cd pycurl_inst
 curl -O https://files.pythonhosted.org/packages/12/3f/557356b60d8e59a1cce62ffc07ecc03e4f8a202c86adae34d895826281fb/pycurl-7.43.0.tar.gz
@@ -54,7 +54,7 @@ tar -zxvf pycurl-7.43.0.tar.gz
 cd pycurl-7.43.0/
 sudo apt-get install python3-dev
 sudo apt-get install curl zip unzip tar
-'''
+```
 Edit config.json file from flaskapi/ directory with your API KEY server IP, PORT.
 To run the app:
 > python run.py
