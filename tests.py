@@ -17,6 +17,7 @@ def make_api_call(route, ba_auth=True, city=None, at=None):
   buffer = BytesIO()
   c = pycurl.Curl()
   if route == "ping":
+    print(BASIC_URL + "ping")
     c.setopt(c.URL, BASIC_URL + "ping")
   elif route == "forecast" and at == None:
     c.setopt(c.URL, BASIC_URL + "forecast/" + city)
