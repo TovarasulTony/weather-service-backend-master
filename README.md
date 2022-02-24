@@ -45,13 +45,13 @@ installation of ubuntu 20.04 and we know nothing about your implementation**
 
 I really hope I didn't missed anything. I won't put the full process to install pycurl, I had a lot of problems on my machine and I think I did some hacks to make it work. I tried so many things I am not even sure what worked.
 
-    mkdir pycurl_inst
-		cd pycurl_inst
-    curl -O https://files.pythonhosted.org/packages/12/3f/557356b60d8e59a1cce62ffc07ecc03e4f8a202c86adae34d895826281fb/pycurl-7.43.0.tar.gz
-		tar -zxvf pycurl-7.43.0.tar.gz
-		cd pycurl-7.43.0/
-		sudo apt-get install python3-dev
-		sudo apt-get install curl zip unzip tar
+- mkdir pycurl_inst
+- cd pycurl_inst
+- curl -O https://files.pythonhosted.org/packages/12/3f/557356b60d8e59a1cce62ffc07ecc03e4f8a202c86adae34d895826281fb/pycurl-7.43.0.tar.gz
+- tar -zxvf pycurl-7.43.0.tar.gz
+- cd pycurl-7.43.0/
+- sudo apt-get install python3-dev
+- sudo apt-get install curl zip unzip tar
 
 The Service
 -----------
