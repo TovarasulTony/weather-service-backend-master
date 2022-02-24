@@ -10,7 +10,7 @@ from flaskapi.enums import API_CALL_TYPE
 from flaskapi.cache import CacheStruct
 
 
-with open("config.json") as jsonFile:
+with open("flaskapi/config.json") as jsonFile:
   jsonConfig = json.load(jsonFile)
   jsonFile.close()
 CELSIUS_KELVIN_OFFSET = 273.15
