@@ -32,16 +32,16 @@ Getting it running
 installation of ubuntu 20.04 and we know nothing about your implementation**
 
 
-sudo apt install curl
-sudo apt install libcurl4-gnutls-dev librtmp-dev
-sudo apt install libcurl4-openssl-dev libssl-dev
-pip install Flask
-pip install flask_httpauth
-pip install geopy 
-pip install Nominatim
-pip install certifi
-pip install python-dateutil
-pip install pycurl
+- sudo apt install curl
+- sudo apt install libcurl4-gnutls-dev librtmp-dev
+- sudo apt install libcurl4-openssl-dev libssl-dev
+- pip install Flask
+- pip install flask_httpauth
+- pip install geopy 
+- pip install Nominatim
+- pip install certifi
+- pip install python-dateutil
+- pip install pycurl
 
 I really hope I didn't missed anything. I won't put the full process to install pycurl, I had a lot of problems on my machine and I think I did some hacks to make it work. I tried so many things I am not even sure what worked.
 
