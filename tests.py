@@ -2,7 +2,7 @@ import pycurl
 import certifi
 from io import BytesIO
 
-with open("config.json") as jsonFile:
+with open("flaskapi/config.json") as jsonFile:
   jsonConfig = json.load(jsonFile)
   jsonFile.close()
 SERVER_IP = jsonConfig["IP"]
