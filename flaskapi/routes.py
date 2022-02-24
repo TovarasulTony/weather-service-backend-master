@@ -32,11 +32,11 @@ def ping():
 @app.route("/forecast/<string:city>")
 @app.route("/forecast/<string:city>/")
 def forecast(city):
-  #if request.authorization["username"] != USERNAME_BA and request.authorization["password"] != PASS_BA:
-  #    return jsonify({
-  #      "error": "You are not authorized for access",
-  #      "error_code": "wrong_credentials"
-  #    }), 403
+  if request.authorization["username"] != USERNAME_BA and request.authorization["password"] != PASS_BA:
+      return jsonify({
+        "error": "You are not authorized for access",
+        "error_code": "wrong_credentials"
+      }), 403
   at = request.args.get('at', type=str)
   lat, lon = get_lat_lon(city)
 
