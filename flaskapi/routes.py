@@ -80,12 +80,12 @@ def internal_error(error):
     "error_code": "internal_server_error"
   }), 500
 
-@app.errorhandler(403)
+@app.errorhandler(401)
 def forbidden_access(error):
   return jsonify({
     "error": "You are not authorized for access",
     "error_code": "wrong_credentials"
-  }), 403
+  }), 401
 
 def handle_at_arg_case(at, lat, lon, cache_id):
   yourdate = time_parser.isoparse(at.replace(" ", "+")) # dirty hack, I don't know how to fix this or if this breaks something else :(

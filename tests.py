@@ -11,6 +11,8 @@ USERNAME_BA = jsonConfig["USERNAME_BA"]
 PASS_BA = jsonConfig["PASS_BA"]
 BASIC_URL = "http://" + SERVER_IP + ":" + str(PORT_IP) + "/"
 
+test_all()
+
 def make_api_call(route, ba_auth=True, city=None, at=None):
   buffer = BytesIO()
   c = pycurl.Curl()
@@ -48,9 +50,6 @@ def test_forecast():
   response_json = json.loads(response_json)
   for elem in response_json:
     print(response_json[elem])
-      "humidity": str(round(response_json["main"]["humidity"], 2)) + "%",
-      "pressure": str(round(response_json["main"]["pressure"], 2)) + " hPa",
-      "temperature": str(round(response_json["main"]["temp"] - CELSIUS_KELVIN_OFFSET, 1)) + "C"
   if response_json["humidity"] != None or len(response_json["humidity"]) <= 1 or response_json["humidity"][-1] != "%":
     return False
   if response_json["pressure"] != None or len(response_json["pressure"]) <= 4 or response_json["pressure"][-4:0] != " hPa":
@@ -58,3 +57,9 @@ def test_forecast():
   if response_json["temperature"] != None or len(response_json["temperature"]) <= 1 or response_json["temperature"][-1] != "C":
     return False
   return True
+
+def test_all():
+  print("-----")
+  print("test_ping:")
+  print(test_ping())
+  print("-----")
