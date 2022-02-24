@@ -1,9 +1,9 @@
 import json
-
-from flaskapi import app
-from flask import jsonify, request
 from datetime import timezone
 from dateutil import parser as time_parser
+from flask import jsonify, request
+from flask_httpauth import HTTPBasicAuth
+from flaskapi import app
 from flaskapi.coordinates import get_lat_lon
 from flaskapi.pycurl_wrapper import make_api_call
 from flaskapi.enums import API_CALL_TYPE
@@ -19,6 +19,14 @@ USERNAME_BA = jsonConfig["USERNAME_BA"]
 PASS_BA = jsonConfig["PASS_BA"]
 cache_struct = CacheStruct()
 
+auth = HTTPBasicAuth()
+
+@auth.verify_password
+def verify_password(username, password):
+  if username == USERNAME_BA and password == PASS_BA:
+    return True
+  return False
+
 @app.route("/ping")
 @app.route("/ping/")
 def ping():
@@ -31,6 +39,7 @@ def ping():
 
 @app.route("/forecast/<string:city>")
 @app.route("/forecast/<string:city>/")
+@auth.login_required
 def forecast(city):
   if request.authorization["username"] != USERNAME_BA and request.authorization["password"] != PASS_BA:
       return jsonify({
@@ -70,6 +79,13 @@ def internal_error(error):
     "error": "Something went wrong",
     "error_code": "internal_server_error"
   }), 500
+
+@app.errorhandler(403)
+def forbidden_access(error):
+  return jsonify({
+    "error": "You are not authorized for access",
+    "error_code": "wrong_credentials"
+  }), 403
 
 def handle_at_arg_case(at, lat, lon, cache_id):
   yourdate = time_parser.isoparse(at.replace(" ", "+")) # dirty hack, I don't know how to fix this or if this breaks something else :(
