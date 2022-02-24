@@ -140,7 +140,6 @@ with `404` status code and an appropriate message:
 
 ```bash
 $ curl -si http://localhost:8080/forecast/westeros
-> Off topic, I think Westeros is a city/region in Germany. I learned this because of this assigment :D
 
 HTTP/1.1 404 Not Found
 Content-Type: application/json; charset=utf-8
@@ -149,6 +148,7 @@ Content-Type: application/json; charset=utf-8
     "error_code": "country_not_found"
 }
 ```
+> Off topic, I think Westeros is a city/region in Germany. I learned this because of this assigment :D
 
 Similarly invalid requests should return a `400` status code:
 
