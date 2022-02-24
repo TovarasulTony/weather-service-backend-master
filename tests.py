@@ -1,5 +1,6 @@
 import pycurl
 import certifi
+import json
 from io import BytesIO
 
 with open("flaskapi/config.json") as jsonFile:
